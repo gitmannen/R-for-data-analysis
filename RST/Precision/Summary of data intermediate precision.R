@@ -298,3 +298,78 @@ newfunction("Operator","ROX","Day") #arguments are as follows (xval, channel, gr
 # the xval should be the operator, so you will see 1 box plot for operator 1 and another boxplot for operator 2 the factor you are comparing between (e.g. day to day or operator to operator)
 # channel is the channel that you are interested in (e.g. ROX or FAM)
 # grouper is what you want to compare. e.g. day to day or operator to operator. if you put day, then you should see that you the points in your box plot is colour cooded according to the day of operation
+
+
+
+Summarize(ROX~Operator + Sample,
+          data=a,
+          digits = 3)
+
+# dayToDayVar <- ggplot(data = a, aes(x= Operator, y = ROX))
+# dayToDayVar+
+#   geom_boxplot()+
+#   geom_jitter(aes(colour=Day))
+
+
+#Additional ANOVA test using the R handbook/ Mix of Two-way and One-way ANOVA.
+# if(!require(psych)){install.packages("psych")}
+# if(!require(FSA)){install.packages("FSA")}
+# if(!require(Rmisc)){install.packages("Rmisc")}
+# if(!require(ggplot2)){install.packages("ggplot2")}
+# if(!require(car)){install.packages("car")}
+# if(!require(multcompView)){install.packages("multcompView")}
+# if(!require(lsmeans)){install.packages("lsmeans")}
+# if(!require(rcompanion)){install.packages("rcompanion")}
+# 
+# typeof(a)
+# 
+# library(psych)
+# headTail(a)
+# a
+# 
+# library(FSA)
+# Summarize(ROX~Operator + Sample,
+#           data=a,
+#           digits = 3)        
+# 
+# boxplot(ROX~Operator + Sample,
+#         data = a)
+# 
+# library(rcompanion)
+# Sum = groupwiseMean(data = a,
+#                     var = "ROX",
+#                     group = c("Operator","Sample"),
+#                               conf = 0.95,
+#                               digits = 3,
+#                               tradition = F,
+#                               percentile = T)
+# Sum
+# 
+# library(ggplot2)
+# ggplot(Sum,aes(x = Sample, y = Mean))+
+#   geom_errorbar(aes(ymin = Percentile.lower,
+#                     ymax = Percentile.upper),
+#                 width = 0.05,
+#                 size = 0.5)+
+#   geom_point(shape = 15,
+#               size = 4,
+#              aes(colour = Operator))+
+#   theme_bw()+
+#   theme(axis.title = element_text(face = "bold"))+
+#   ylab("Mean Rox, ct")
+# 
+# 
+# model = lm(ROX~Operator + Sample + Operator:Sample,
+#            data = a)
+# summary(model)
+# 
+# library(car)
+# Anova(model,
+#       type = "II")
+# 
+# resi = residuals(model)
+# library(rcompanion)
+# plotNormalHistogram(resi)
+# 
+# plot(fitted(model),
+#      residuals(model))
