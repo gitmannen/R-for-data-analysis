@@ -2,7 +2,7 @@ library(ggplot2)
 
 getwd()
 # setwd("..\\Users\\Lion\\Documents\\Lion Local\\RST and RMT qualification\\rst")
-a<-read.csv("operator to operator 2.csv")
+a<-read.csv("2021-06-23_092531 RMT operator to operator var day1.csv")
 a
 str(a)
 #a$Operator == 'O1'
@@ -289,8 +289,11 @@ newfunction <- function(xval,channel,grouper){
   }
     
 }
-    
-  
+
+library(FSA)
+Summarize(ROX~Operator + Sample,
+                     data=a,
+                     digits = 3)
 
 
 newfunction("Operator","ROX","Day") #arguments are as follows (xval, channel, grouper)
