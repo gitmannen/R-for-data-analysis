@@ -2,7 +2,7 @@ library(ggplot2)
 
 getwd()
 # setwd("..\\Users\\Lion\\Documents\\Lion Local\\RST and RMT qualification\\rst")
-a<-read.csv("2021-06-23_092531 RMT operator to operator var day1.csv")
+a<-read.csv("2021-06-24_140353 RMT operator to operator var day1and2.csv")
 a
 str(a)
 #a$Operator == 'O1'
@@ -296,7 +296,7 @@ Summarize(ROX~Operator + Sample,
                      digits = 3)
 
 
-newfunction("Operator","ROX","Day") #arguments are as follows (xval, channel, grouper)
+newfunction("Day","FAM","Operator") #arguments are as follows (xval, channel, grouper)
 # xval is what you want the size of the box plot to depend on. e.g. if you are looking at day to day variability,
 # the xval should be the operator, so you will see 1 box plot for operator 1 and another boxplot for operator 2 the factor you are comparing between (e.g. day to day or operator to operator)
 # channel is the channel that you are interested in (e.g. ROX or FAM)
