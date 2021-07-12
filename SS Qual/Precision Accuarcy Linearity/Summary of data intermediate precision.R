@@ -170,10 +170,22 @@ newfunction <- function(xval,grouper){
 }
 
 library(FSA)
-Summarize(Total..CD8.....Vb3....Viable ~ Sample+Day,
+aSummary <- Summarize(Total..CD8.....Vb3....Viable ~ Sample+Operator,
                      data=a,
                      digits = 3)
-
+# DAdata<-aSummary[1:6,c(1,2,4)]
+# DAdata$EPPercent <- c("0","100","20","40","60","80")
+# DAdata$EPPercent <- factor(DAdata$EPPercent, levels=c('0','100','20','40','60','80'))
+# 
+# regressor = lm(formula = mean ~ EPPercent,
+#                data = DAdata)
+# 
+# ggplot(data = DAdata, aes(x=EPPercent, y=mean))+
+#   geom_point(aes(x=EPPercent, y=mean))+
+#   geom_line()
+# 
+# 
+# plot(DAdata$EPPercent,DAdata$mean)
 
 newfunction("Operator","Day")
 newfunction("Day","Operator") #arguments are as follows (xval, channel, grouper)
