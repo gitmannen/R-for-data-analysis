@@ -1,12 +1,14 @@
 library(ggplot2)
 
 getwd()
-a<-read.csv("RST Robustness cell number.csv")
+a<-read.csv("RST robustness heating and residual.csv")
 a
 str(a)
 
-summary(a)
-z<-ggplot(data=a, aes(x=Group, y=Ct, label = Ct))
+a$Group <- factor(a$Group, c("PC","NTC","Ref","Heat 7 min","Heat 4 min","Residual 10ul"))
+b<-a[1:15,]
+summary(b)
+z<-ggplot(data=b, aes(x=Group, y=Ct, label = Ct))
 z+
   geom_boxplot(outlier.alpha = 0,
                alpha = 0.5)+
@@ -14,7 +16,8 @@ z+
               aes(colour = Group),
               alpha = 0.3
               )+
-  ggtitle("Box Plot of Ct values for samples with different cell number in the ROX channel")+
+  ggtitle("Box Plot of Ct values for samples with heating duration in the ROX channel")+
+  xlab("Samples")+
   ylab("Ct value in the ROX channel")+
   theme(axis.title = 
           element_text(size = 18),
@@ -27,8 +30,6 @@ z+
         axis.text = 
           element_text(size = 16),
         axis.ticks.x.bottom = 
-          element_blank(),
-        axis.title.x = 
           element_blank(),
         plot.title =
           element_text(size = 20,
@@ -46,15 +47,17 @@ z+
             aes(colour = Group) #changes the colour to match the Operator colour
             )
 
+c<-b[b$Group!="PC" & b$Group!="NTC",]
+
 
 library(FSA)
 Summarize(Ct~Group,
-          data=a,
+          data=c,
           digits = 3)
 
 
 model = lm(Ct~Group,
-          data = a)
+          data = c)
 summary(model)
 
 library(car)
