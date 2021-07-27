@@ -1,11 +1,11 @@
 library(ggplot2)
 
 getwd()
-a<-read.csv("RMT robustness cell number PC.csv")
+a<-read.csv("RMT robustness heat time.csv")
 a
 str(a)
 
-a$Group <- factor(a$Group, c("PC10","PC8","PC5","NTC","Ref","300k","500k","800k"))
+a$Group <- factor(a$Group, c("PC","NTC","Ref","7min","4min"))
 
 summary(a)
 z<-ggplot(data=a, aes(x=Group, y=Ct, label = Ct))
@@ -16,7 +16,7 @@ z+
               aes(colour = Group),
               alpha = 0.3
               )+
-  ggtitle("Box Plot of Ct values for samples with different cell number \n and different volumes of PC in the ROX channel")+
+  ggtitle("Box Plot of Ct values for samples heated for diffferent durations in the ROX channel")+
   xlab("Samples")+
   ylab("Ct value in the ROX channel")+
   theme(axis.title = 
@@ -47,38 +47,23 @@ z+
             aes(colour = Group) #changes the colour to match the Operator colour
             )
 
-#Ref, 300k, 500k, and 800k only
-b<-a[a$Group!="PC10" & a$Group!="PC8" & a$Group!="PC5" & a$Group!="NTC",]
+b<-a[a$Group!="PC" & a$Group!="NTC",]
 
-#PC10, PC8 and PC5 only
-c<-a[a$Group != "Ref" & a$Group != "300k" & a$Group != "500k" & a$Group != "800k",]
 
 library(FSA)
-#Ref, 300k, 500k, and 800k only
 Summarize(Ct~Group,
           data=b,
           digits = 3)
 
-#PC10, PC8 and PC5 only
-Summarize(Ct~Group,
-          data=c,
-          digits = 3)
 
-
-modelb = lm(Ct~Group,
+model = lm(Ct~Group,
           data = b)
-
-modelc = lm(Ct~Group,
-           data = c)
-
 summary(model)
 
 library(car)
-Anova(modelb,
+Anova(model,
       type = "II")
 
-Anova(modelc,
-      type = "II")
 
 install.packages('multcompView')
 install.packages('lsmeans')
