@@ -1,24 +1,24 @@
 library(ggplot2)
 
 getwd()
-a<-read.csv("RMT robustness cell number PC.csv")
+a<-read.csv("robustness cell number cocktail stability for R.csv")
 a
 str(a)
 
-a$Group <- factor(a$Group, c("PC10","PC8","PC5","NTC","Ref","300k","500k","800k"))
+a$Tube.Name. <- factor(a$Tube.Name., c("500k cells","1.5mil cells","30min","60mins","Ref"))
 
 summary(a)
-z<-ggplot(data=a, aes(x=Group, y=Ct, label = Ct))
+z<-ggplot(data=a, aes(x=Tube.Name., y=Total..CD8.....Vb3....Viable, label = Total..CD8.....Vb3....Viable))
 z+
   geom_boxplot(outlier.alpha = 0,
                alpha = 0.5)+
   geom_jitter(size = 5,
-              aes(colour = Group),
+              aes(colour = Tube.Name.),
               alpha = 0.3
               )+
-  ggtitle("Box Plot of Ct values for samples with different cell number \n and different volumes of PC in the ROX channel")+
+  ggtitle("Box Plot of Total (CD8+/-) Vb3+ % Viable for samples with different cell number \n and different holding time of antibody cocktail prior to staining")+
   xlab("Samples")+
-  ylab("Ct value in the ROX channel")+
+  ylab("Total (CD8+/-) Vb3+ % Viable")+
   theme(axis.title = 
           element_text(size = 16),
         legend.title = 
@@ -44,19 +44,14 @@ z+
             #nudge_x = -0.6,
             vjust = 1.5,
             #nudge_y = -0.01,
-            aes(colour = Group) #changes the colour to match the Operator colour
+            aes(colour = Tube.Name.) #changes the colour to match the Operator colour
             )
 
-#Ref, 300k, 500k, and 800k only
-b<-a[a$Group!="PC10" & a$Group!="PC8" & a$Group!="PC5" & a$Group!="NTC",]
-
-#PC10, PC8 and PC5 only
-c<-a[a$Group != "Ref" & a$Group != "300k" & a$Group != "500k" & a$Group != "800k",]
 
 library(FSA)
 #Ref, 300k, 500k, and 800k only
-Summarize(Ct~Group,
-          data=b,
+Summarize(Tube.Name.~Total..CD8.....Vb3....Viable,
+          data=a,
           digits = 3)
 
 #PC10, PC8 and PC5 only
@@ -65,26 +60,21 @@ Summarize(Ct~Group,
           digits = 3)
 
 
-modelb = lm(Ct~Group,
-          data = b)
+modela = lm(Total..CD8.....Vb3....Viable~Tube.Name.,
+          data = a)
 
-modelc = lm(Ct~Group,
-           data = c)
-
-summary(model)
+summary(modela)
 
 library(car)
-Anova(modelb,
+Anova(modela,
       type = "II")
 
-Anova(modelc,
-      type = "II")
 
 install.packages('multcompView')
 install.packages('lsmeans')
 library(multcompView)
 library(lsmeans)
-leastsquare = lsmeans(model, pairwise ~ Group, adjust = "tukey")
+leastsquare = lsmeans(modela, pairwise ~ Tube.Name., adjust = "tukey")
 leastsquare
 
 cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
