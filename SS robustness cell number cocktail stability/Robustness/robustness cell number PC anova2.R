@@ -1,11 +1,11 @@
 library(ggplot2)
 
 getwd()
-a<-read.csv("robustness cell number cocktail stability for R.csv")
+a<-read.csv("Exp_20210830_ ER2 SS Robustness Draq7 and staining time for R.csv")
 a
 str(a)
 
-a$Tube.Name. <- factor(a$Tube.Name., c("Ref","500k cells","1.5mil cells","30min at 4 deg","60mins at 4 deg"))
+a$Tube.Name. <- factor(a$Tube.Name., c("Ref","Stain 10min","Stain 25min","Draq7 15min","Draq7 30min"))
 
 summary(a)
 z<-ggplot(data=a, aes(x=Tube.Name., y=Total..CD8.....Vb3....Viable, label = Total..CD8.....Vb3....Viable))
@@ -16,7 +16,7 @@ z+
               aes(colour = Tube.Name.),
               alpha = 0.3
               )+
-  ggtitle("Box Plot of Total (CD8+/-) Vb3+ % Viable for samples with different cell number \n and different holding time of antibody cocktail prior to staining")+
+  ggtitle("Box Plot of Total (CD8+/-) Vb3+ % Viable for samples different with antibody staining time \n and different DraQ7 staining time")+
   xlab("Samples")+
   ylab("Total (CD8+/-) Vb3+ % Viable")+
   theme(axis.title = 
