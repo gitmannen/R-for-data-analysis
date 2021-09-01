@@ -5,10 +5,10 @@ a<-read.csv("robustness cell number cocktail stability for R.csv")
 a
 str(a)
 
-a$Tube.Name. <- factor(a$Tube.Name., c("Ref","500k cells","1.5mil cells","30min at 4 deg","60mins at 4 deg"))
+a$Tube.Name. <- factor(a$Tube.Name., c("Ref","500k cells","1.5mil cells","30mins at 4 deg","60mins at 4 deg"))
 
 summary(a)
-z<-ggplot(data=a, aes(x=Tube.Name., y=Total..CD8.....Vb3....Viable, label = Total..CD8.....Vb3....Viable))
+z<-ggplot(data=a, aes(x=Tube.Name., y=Total.CD8..Vb3....Viable, label = Total.CD8..Vb3....Viable))
 z+
   geom_boxplot(outlier.alpha = 0,
                alpha = 0.5)+
@@ -16,9 +16,9 @@ z+
               aes(colour = Tube.Name.),
               alpha = 0.3
               )+
-  ggtitle("Box Plot of Total (CD8+/-) Vb3+ % Viable for samples with different cell number \n and different holding time of antibody cocktail prior to staining")+
+  ggtitle("Box Plot of Total CD8+ Vb3+ % Viable for samples with different cell number \n and different holding time of antibody cocktail prior to staining")+
   xlab("Samples")+
-  ylab("Total (CD8+/-) Vb3+ % Viable")+
+  ylab("Total CD8+ Vb3+ % Viable")+
   theme(axis.title = 
           element_text(size = 16),
         legend.title = 
@@ -50,7 +50,7 @@ z+
 
 library(FSA)
 #Ref, 300k, 500k, and 800k only
-Summarize(Tube.Name.~Total..CD8.....Vb3....Viable,
+Summarize(Tube.Name.~Total.CD8..Vb3....Viable,
           data=a,
           digits = 3)
 
@@ -60,7 +60,7 @@ Summarize(Ct~Group,
           digits = 3)
 
 
-modela = lm(Total..CD8.....Vb3....Viable~Tube.Name.,
+modela = lm(Total.CD8..Vb3....Viable~Tube.Name.,
           data = a)
 
 summary(modela)

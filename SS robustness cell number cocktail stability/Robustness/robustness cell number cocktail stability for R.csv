@@ -1,16 +1,16 @@
-Tube Name:,Total (CD8+/-) Vb3+ % Viable
-500k cells,87.98
-500k cells,86.73
-500k cells,88.48
-1.5mil cells,87.39
-1.5mil cells,87.62
-1.5mil cells,87.41
-30min at 4 deg,83.19
-30min at 4 deg,81.52
-30min at 4 deg,83.08
-60mins at 4 deg,79.66
-60mins at 4 deg,82.41
-60mins at 4 deg,80.27
-Ref,86.52
-Ref,82.42
-Ref,86.18
+Tube Name:,Total CD8+ Vb3+ % Viable
+500k cells,67.58
+500k cells,65.54
+500k cells,67.91
+1.5mil cells,71.82
+1.5mil cells,70.63
+1.5mil cells,70
+30mins at 4 deg,59.39
+30mins at 4 deg,60.12
+30mins at 4 deg,60.69
+60mins at 4 deg,60.21
+60mins at 4 deg,65
+60mins at 4 deg,61
+Ref,67.77
+Ref,66.25
+Ref,67.53
