@@ -187,6 +187,10 @@ aSummary <- Summarize(Total..CD8.....Vb3....Viable ~ Sample+Operator,
 # 
 # plot(DAdata$EPPercent,DAdata$mean)
 
+aSummary
+
+library(car)
+
 newfunction("Operator","Day")
 newfunction("Day","Operator") #arguments are as follows (xval, channel, grouper)
 # xval is what you want the size of the box plot to depend on. e.g. if you are looking at day to day variability,
