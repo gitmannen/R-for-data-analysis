@@ -189,7 +189,18 @@ aSummary <- Summarize(Total..CD8.....Vb3....Viable ~ Sample+Operator,
 
 aSummary
 
+
+
+modela = lm(Total..CD8.....Vb3....Viable~Operator+Day,
+            data = a)
+
+summary(modela)
+
 library(car)
+Anova(modela,
+      type = "II")
+
+
 
 newfunction("Operator","Day")
 newfunction("Day","Operator") #arguments are as follows (xval, channel, grouper)
