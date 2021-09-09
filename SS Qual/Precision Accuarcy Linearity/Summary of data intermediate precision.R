@@ -200,6 +200,12 @@ library(car)
 Anova(modela,
       type = "II")
 
+library(multcompView)
+library(lsmeans)
+leastsquare = lsmeans(modela, pairwise ~ Operator + Day, adjust = "tukey")
+leastsquare
+
+
 
 
 newfunction("Operator","Day")
