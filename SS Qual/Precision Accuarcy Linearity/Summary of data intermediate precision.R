@@ -2,7 +2,7 @@ library(ggplot2)
 
 getwd()
 # setwd("..\\Users\\Lion\\Documents\\Lion Local\\RST and RMT qualification\\rst")
-a<-read.csv("SS Qual LAP.csv")
+a<-read.csv("CD8posVbetapos percent viable after normalization with mock for R.csv")
 a
 str(a)
 #a$Operator == 'O1'
@@ -21,7 +21,7 @@ summary(a)
 a$Sample
 a$Sample = factor(a$Sample, levels=c('EP0 (Mock)','EP20','EP40','EP60','EP80','EP100'))
 
-z<-ggplot(data=a, aes(x=Day, y=Total..CD8.....Vb3....Viable, label = Total..CD8.....Vb3....Viable))
+z<-ggplot(data=a, aes(x=Day, y=CD8.Vb3....Viable, label = CD8.Vb3....Viable))
 z+
   facet_wrap(.~Sample,nrow = 1, scales = "free_y", labeller = label_both)+
   scale_y_continuous(n.breaks = 10)+
@@ -31,8 +31,8 @@ z+
               aes(colour = Operator),
               alpha = 0.3
               )+
-  ggtitle("Box Plot of Intermediate Precision (Operator to Operator) for Total (CD8+/-) Vb3+ % Viable")+
-  ylab("Total (CD8+/-) Vb3+ % Viable")+
+  ggtitle("Box Plot of Intermediate Precision (Operator to Operator) for Total CD8+ Vb3+ % Viable")+
+  ylab("Total CD8+ Vb3+ % Viable")+
   theme(axis.title = 
           element_text(size = 18),
         legend.title = 
@@ -66,7 +66,7 @@ z+
   
 
 #Box Plot of Intermediate Precision (Day to Day) for Total (CD8+/-) Vb3+ % Viable
-x<-ggplot(data=a, aes(x=Operator, y=Total..CD8.....Vb3....Viable, label = Total..CD8.....Vb3....Viable))
+x<-ggplot(data=a, aes(x=Operator, y=CD8.Vb3....Viable, label = CD8.Vb3....Viable))
 x+
   facet_wrap(.~Sample,nrow = 1, scales = "free_y", labeller = label_both)+
   scale_y_continuous(n.breaks = 10)+
@@ -75,8 +75,8 @@ x+
               aes(colour = Day),
               alpha = 0.5
   )+
-  ggtitle("Box Plot of Intermediate Precision (Day to Day) for Total (CD8+/-) Vb3+ % Viable")+
-  ylab("for Total (CD8+/-) Vb3+ % Viable")+
+  ggtitle("Box Plot of Intermediate Precision (Day to Day) for Total CD8+ Vb3+ % Viable")+
+  ylab("for Total CD8+ Vb3+ % Viable")+
   theme(axis.title = 
           element_text(size = 18),
         legend.title = 
@@ -120,7 +120,7 @@ library(rlang)
 
 
 newfunction <- function(xval,grouper){
-  v1<-ggplot(data=a, aes(x=.data[[xval]], y=Total..CD8.....Vb3....Viable, label =Total..CD8.....Vb3....Viable)) #here you can see how the aes() arguments refer to the arguments in the function
+  v1<-ggplot(data=a, aes(x=.data[[xval]], y=CD8.Vb3....Viable, label =CD8.Vb3....Viable)) #here you can see how the aes() arguments refer to the arguments in the function
   
   #when the channel is ROX, we need to show all three samples, so you need the facet_wrap because there are 3 samples: PC, NTC and Sample
 
@@ -132,8 +132,8 @@ newfunction <- function(xval,grouper){
                 aes(colour = .data[[grouper]]),
                 alpha = 0.5
     )+
-    ggtitle(paste("Box Plot of Intermediate Precision (", grouper, " to ", grouper, ") for Total (CD8+/-) Vb3+ % Viable ",sep =""))+
-    ylab(paste("Total (CD8+/-) Vb3+ % Viable"))+
+    ggtitle(paste("Box Plot of Intermediate Precision (", grouper, " to ", grouper, ") for Total CD8+ Vb3+ % Viable ",sep =""))+
+    ylab(paste("Total CD8+ Vb3+ % Viable"))+
     theme(axis.title =
             element_text(size = 18),
           legend.title =
@@ -170,9 +170,13 @@ newfunction <- function(xval,grouper){
 }
 
 library(FSA)
-aSummary <- Summarize(Total..CD8.....Vb3....Viable ~ Sample+Operator,
+aSummary <- Summarize(CD8.Vb3....Viable ~ Sample+Operator,
                      data=a,
                      digits = 3)
+
+bSummary <- Summarize(CD8.Vb3....Viable ~ Sample+Day,
+                      data=a,
+                      digits = 3)
 # DAdata<-aSummary[1:6,c(1,2,4)]
 # DAdata$EPPercent <- c("0","100","20","40","60","80")
 # DAdata$EPPercent <- factor(DAdata$EPPercent, levels=c('0','100','20','40','60','80'))
@@ -188,10 +192,10 @@ aSummary <- Summarize(Total..CD8.....Vb3....Viable ~ Sample+Operator,
 # plot(DAdata$EPPercent,DAdata$mean)
 
 aSummary
+bSummary
 
 
-
-modela = lm(Total..CD8.....Vb3....Viable~Operator+Day,
+modela = lm(CD8.Vb3....Viable~Operator+Day+Sample,
             data = a)
 
 summary(modela)
@@ -202,7 +206,7 @@ Anova(modela,
 
 library(multcompView)
 library(lsmeans)
-leastsquare = lsmeans(modela, pairwise ~ Operator + Day, adjust = "tukey")
+leastsquare = lsmeans(modela, pairwise ~ Operator + Day + Sample, adjust = "tukey")
 leastsquare
 
 
