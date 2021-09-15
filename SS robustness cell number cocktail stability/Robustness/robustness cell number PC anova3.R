@@ -1,14 +1,14 @@
 library(ggplot2)
 
 getwd()
-a<-read.csv("Exp_20210830_ ER2 SS Robustness Draq7 and staining time for R.csv")
+a<-read.csv("Exp_20210830_ ER2 SS Robustness Draq7 and staining time draq7 only viable percent of singlets for R.csv")
 a
 str(a)
 
-a$Tube.Name. <- factor(a$Tube.Name., c("Ref","Stain 10min","Stain 25min","Draq7 15min","Draq7 30min"))
+a$Tube.Name. <- factor(a$Tube.Name., c("Ref","Draq7 15min","Draq7 30min"))
 
 summary(a)
-z<-ggplot(data=a, aes(x=Tube.Name., y=Total.CD8..Vb3....Viable, label = Total.CD8..Vb3....Viable))
+z<-ggplot(data=a, aes(x=Tube.Name., y=Viable...Singlets, label = Viable...Singlets))
 z+
   geom_boxplot(outlier.alpha = 0,
                alpha = 0.5)+
@@ -16,9 +16,9 @@ z+
               aes(colour = Tube.Name.),
               alpha = 0.3
               )+
-  ggtitle("Box Plot of Total CD8+ Vb3+ % Viable for samples with different antibody staining time \n and different DRAQ7 staining time")+
+  ggtitle("Box Plot of Viable % Singlets for samples with dfferent DRAQ7 staining time")+
   xlab("Samples")+
-  ylab("Total CD8+ Vb3+ % Viable")+
+  ylab("Viable % Singlets")+
   theme(axis.title = 
           element_text(size = 16),
         legend.title = 
@@ -50,7 +50,7 @@ z+
 
 library(FSA)
 #Ref, 300k, 500k, and 800k only
-Summarize(Tube.Name.~Total.CD8..Vb3....Viable,
+Summarize(Tube.Name.~Viable...Singlets,
           data=a,
           digits = 3)
 
@@ -60,7 +60,7 @@ Summarize(Ct~Group,
           digits = 3)
 
 
-modela = lm(Total.CD8..Vb3....Viable~Tube.Name.,
+modela = lm(Viable...Singlets~Tube.Name.,
           data = a)
 
 summary(modela)
