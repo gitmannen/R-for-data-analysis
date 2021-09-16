@@ -86,3 +86,15 @@ cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
 # 
 # plot(fitted(model),
 #      residuals(model))
+
+
+
+
+
+# testing purposes using aov() and TukeyHSD to check if the results are the same as the anova() and the lsmeans() methods
+
+
+anovaona =aov(formula = Viable...Singlets~Tube.Name.,data = a) # this will shoow you only the sum of squares and the def of freedom
+summary(anovaona) # use this to get your p-value which is title under "p adj"
+tuk = TukeyHSD(anovaona,"Tube.Name.",conf.level = 0.95)
+summary(tuk) # use this visualize the confidence intervals
