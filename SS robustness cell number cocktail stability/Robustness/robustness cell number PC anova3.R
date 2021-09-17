@@ -50,14 +50,14 @@ z+
 
 library(FSA)
 #Ref, 300k, 500k, and 800k only
-Summarize(Tube.Name.~Viable...Singlets,
-          data=a,
-          digits = 3)
+#Summarize(Tube.Name.~Viable...Singlets,
+#          data=a,
+#          digits = 3)
 
 #PC10, PC8 and PC5 only
-Summarize(Ct~Group,
-          data=c,
-          digits = 3)
+#Summarize(Ct~Group,
+#          data=c,
+#          digits = 3)
 
 
 modela = lm(Viable...Singlets~Tube.Name.,
@@ -70,14 +70,14 @@ Anova(modela,
       type = "II")
 
 
-install.packages('multcompView')
-install.packages('lsmeans')
+# install.packages('multcompView')
+# install.packages('lsmeans')
 library(multcompView)
 library(lsmeans)
 leastsquare = lsmeans(modela, pairwise ~ Tube.Name., adjust = "tukey")
 leastsquare
 
-cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
+# cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
 
 
 # resi = residuals(model)
@@ -94,7 +94,15 @@ cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
 # testing purposes using aov() and TukeyHSD to check if the results are the same as the anova() and the lsmeans() methods
 
 
-anovaona =aov(formula = Viable...Singlets~Tube.Name.,data = a) # this will shoow you only the sum of squares and the def of freedom
-summary(anovaona) # use this to get your p-value which is title under "p adj"
-tuk = TukeyHSD(anovaona,"Tube.Name.",conf.level = 0.95)
-summary(tuk) # use this visualize the confidence intervals
+#anovaona =aov(formula = Viable...Singlets~Tube.Name.,data = a) # this will shoow you only the sum of squares and the def of freedom
+#summary(anovaona) # use this to get your p-value which is title under "p adj"
+#tuk = TukeyHSD(anovaona,"Tube.Name.",conf.level = 0.95)
+#summary(tuk) # use this visualize the confidence intervals
+
+
+
+# dunnett's test for comparison with a reference group
+library(DescTools)
+DunnettTest(a$Viable...Singlets,a$Tube.Name., control = "Ref", conf.level = 0.95) # this is the same at the line below
+dunnofa = DunnettTest(a$Viable...Singlets~a$Tube.Name., control = "Ref", conf.level = 0.95)
+plot(dunnofa)

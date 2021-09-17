@@ -50,14 +50,14 @@ z+
 
 library(FSA)
 #Ref, 300k, 500k, and 800k only
-Summarize(Tube.Name.~Total.CD8..Vb3....Viable,
-          data=a,
-          digits = 3)
+#Summarize(Tube.Name.~Total.CD8..Vb3....Viable,
+#          data=a,
+#          digits = 3)
 
 #PC10, PC8 and PC5 only
-Summarize(Ct~Group,
-          data=c,
-          digits = 3)
+#Summarize(Ct~Group,
+#          data=c,
+#          digits = 3)
 
 
 modela = lm(Total.CD8..Vb3....Viable~Tube.Name.,
@@ -70,14 +70,14 @@ Anova(modela,
       type = "II")
 
 
-install.packages('multcompView')
-install.packages('lsmeans')
+#install.packages('multcompView')
+#install.packages('lsmeans')
 library(multcompView)
 library(lsmeans)
 leastsquare = lsmeans(modela, pairwise ~ Tube.Name., adjust = "tukey")
 leastsquare
 
-cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
+#cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
 
 
 # resi = residuals(model)
@@ -86,3 +86,12 @@ cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
 # 
 # plot(fitted(model),
 #      residuals(model))
+
+
+library(DescTools)
+DunnettTest(a$Total.CD8..Vb3....Viable,a$Tube.Name., control = "Ref", conf.level = 0.95) # this is the same at the line below
+dunnofa = DunnettTest(a$Total.CD8..Vb3....Viable~a$Tube.Name., control = "Ref", conf.level = 0.95)
+plot(dunnofa)
+
+dunnofa$data.name
+
