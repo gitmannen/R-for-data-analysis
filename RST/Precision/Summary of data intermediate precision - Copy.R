@@ -303,7 +303,21 @@ newfunction("Operator","FAM","Day") #arguments are as follows (xval, channel, gr
 a
 
 DayVarRox <- a[a$Operator == 'Op1',c(1,2,3,5)]
-aov(ROX~Sample)
+DayVarRox.aov <- aov(ROX~Day+Sample,data=DayVarRox)
+summary(DayVarRox.aov)
+
+
+aggregate(DayVarRox,
+          by = list(DayVarRox$Day,DayVarRox$Sample),
+          FUN = mean)
+
+
+
+
+
+install.packages('DescTools')
+library(DescTools)
+plot(TukeyHSD(DayVarRox.aov,c("Day"),conf.level = 0.95))
 
 
 install.packages('FSA')
@@ -329,7 +343,7 @@ install.packages('multcompView')
 install.packages('lsmeans')
 library(multcompView)
 library(lsmeans)
-leastsquare = lsmeans(model, pairwise ~ Operator, adjust = "tukey")
+leastsquare = lsmeans(model, pairwise ~ Day, adjust = "tukey")
 leastsquare
 
 cld(leastsquare, alpha = 0.05, Letters = letters, adjust="tukey")
