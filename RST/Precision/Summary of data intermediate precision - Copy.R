@@ -300,19 +300,23 @@ newfunction("Operator","FAM","Day") #arguments are as follows (xval, channel, gr
 # grouper is what you want to compare. e.g. day to day or operator to operator. if you put day, then you should see that you the points in your box plot is colour cooded according to the day of operation
 
 
+a
+
+DayVarRox <- a[a$Operator == 'Op1',c(1,2,3,5)]
+aov(ROX~Sample)
 
 
 install.packages('FSA')
 install.packages('car')
 
 library(FSA)
-Summarize(ROX~Day+Operator+Sample,
-          data=a,
+Summarize(ROX~Operator+Sample,
+          data=DayVarRox,
           digits = 3)
 
 
-model = lm(ROX~Day+Operator+Sample,
-           data = a)
+model = lm(ROX~Sample,
+           data = DayVarRox)
 model
 summary(model)
 
