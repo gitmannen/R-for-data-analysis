@@ -55,7 +55,7 @@ str(dataset2)
 
 bplot <- ggplot(data=dataset2, aes(x=EP.Conc, y=EP))
 # box plot but using the ggpmisc to give the equation of the regression line
-dev.cur()
+#dev.cur() #this code is used to find out which R graphics device is being used
 bplot+
   geom_smooth(aes(x=EP.Conc,y=EP),method=lm, se = TRUE, formula = y~x,)+
   #geom_boxplot(aes(colour=EPConcFactor), outlier.alpha = 0)+ # optional, but the graph will be too confusing
@@ -66,7 +66,7 @@ bplot+
   stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
                parse = TRUE, coef.digits = 5, f.digits = 5, p.digits = 10, rr.digits = 4, size = 6)+ # just use this function from ggpmisc to get the equation and r2 value
   guides(color = guide_legend(title = "EP Percent"))+
-  ggtitle("Linear Regression of CD8+Vb3+ % viable against Percent EP cells in various EP:Mock mixing ratios")+
+  ggtitle("Linear Regression of CD8+Vb3+ % viable against Percent EP cells \n in various EP:Mock mixing ratios")+
   theme(axis.title = 
           element_text(size = 18),
         legend.title = 
