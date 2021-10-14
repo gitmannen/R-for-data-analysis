@@ -106,3 +106,59 @@ library(DescTools)
 DunnettTest(a$Viable...Singlets,a$Tube.Name., control = "Ref", conf.level = 0.95) # this is the same at the line below
 dunnofa = DunnettTest(a$Viable...Singlets~a$Tube.Name., control = "Ref", conf.level = 0.95)
 plot(dunnofa)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ---------------------------------testing------------------------------------
+
+#plotting mean line on box plot using stat_summary
+z+
+  geom_boxplot(outlier.alpha = 0,
+               alpha = 0.5)+
+  geom_jitter(size = 5,
+              aes(colour = Tube.Name.),
+              alpha = 0.3
+  )+
+  ggtitle("Box Plot of Viable % Singlets for samples with dfferent DRAQ7 staining time")+
+  xlab("Samples")+
+  ylab("Viable % Singlets")+
+  theme(axis.title = 
+          element_text(size = 16),
+        legend.title = 
+          element_text(size = 16),
+        legend.text = 
+          element_text(size = 16),
+        strip.text = 
+          element_text(size = 14),
+        axis.text = 
+          element_text(size = 14),
+        axis.ticks.x.bottom = 
+          element_blank(),
+        plot.title =
+          element_text(size = 18,
+                       hjust = 0.5)
+  )+
+  
+  #add in labels to the plot
+  geom_text(check_overlap = T, #avoid overlapping the labels
+            size = 4.3,
+            show.legend = F, #remove the 'a' in the legend
+            hjust = 0.5,
+            #nudge_x = -0.6,
+            vjust = 1.5,
+            #nudge_y = -0.01,
+            aes(colour = Tube.Name.) #changes the colour to match the Operator colour
+  )+
+  stat_summary(fun = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..),
+               width = .75, linetype = "dashed")
