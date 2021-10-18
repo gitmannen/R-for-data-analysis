@@ -114,3 +114,4 @@ library(DescTools)
 DunnettTest(a$Total.CD8..Vb3....Viable,a$Tube.Name., control = "Ref", conf.level = 0.95) # this is the same at the line below
 dunnofa = DunnettTest(a$Total.CD8..Vb3....Viable~a$Tube.Name., control = "Ref", conf.level = 0.95)
 plot(dunnofa)
+
