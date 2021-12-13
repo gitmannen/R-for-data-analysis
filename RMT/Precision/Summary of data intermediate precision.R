@@ -56,7 +56,9 @@ z+
             #vjust = 0,
             #nudge_y = -0.01,
             aes(colour = Operator) #changes the colour to match the Operator colour
-            )
+            )+
+  stat_summary(fun = mean, geom = 'errorbar', aes(ymax = ..y..,ymin=..y..),
+                           width = 0.75, linetype = 'dashed')
 
   
 #Box Plot of Intermediate Precision (Operator to Operator) in the FAM channel
@@ -241,7 +243,9 @@ newfunction <- function(xval,channel,grouper){
                 #vjust = 0,
                 #nudge_y = -0.01,
                 aes(colour = .data[[grouper]]) #changes the colour to match the Operator colour
-      )
+      )+
+      stat_summary(fun = mean, geom = 'errorbar', aes(ymax = ..y..,ymin=..y..),
+                   width = 0.75, linetype = 'dashed')
   }
   
   #if channel is not ROX (i.e. ROX), then you don't need the face_wrap because there is only 1 sample
@@ -284,7 +288,9 @@ newfunction <- function(xval,channel,grouper){
                 #vjust = 0,
                 #nudge_y = -0.01,
                 aes(colour = .data[[grouper]]) #changes the colour to match the Operator colour
-      )
+      )+
+      stat_summary(fun = mean, geom = 'errorbar', aes(ymax = ..y..,ymin=..y..),
+                   width = 0.75, linetype = 'dashed')
     
   }
     
@@ -296,7 +302,7 @@ Summarize(ROX~Operator + Sample,
                      digits = 3)
 
 
-newfunction("Day","FAM","Operator") #arguments are as follows (xval, channel, grouper)
+newfunction("Day","ROX","Operator") #arguments are as follows (xval, channel, grouper)
 # xval is what you want the size of the box plot to depend on. e.g. if you are looking at day to day variability,
 # the xval should be the operator, so you will see 1 box plot for operator 1 and another boxplot for operator 2 the factor you are comparing between (e.g. day to day or operator to operator)
 # channel is the channel that you are interested in (e.g. ROX or FAM)
