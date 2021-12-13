@@ -56,7 +56,9 @@ z+
             #vjust = 0,
             #nudge_y = -0.01,
             aes(colour = Operator) #changes the colour to match the Operator colour
-            )
+            )+
+  stat_summary(fun = mean, geom = 'errorbar', aes(ymax = ..y..,ymin=..y..),
+               width = 0.75, linetype = 'dashed')
 
   
 #Box Plot of Intermediate Precision (Operator to Operator) in the FAM channel
@@ -241,7 +243,9 @@ newfunction <- function(xval,channel,grouper){
                 #vjust = 0,
                 #nudge_y = -0.01,
                 aes(colour = .data[[grouper]]) #changes the colour to match the Operator colour
-      )
+      )+
+      stat_summary(fun = mean, geom = 'errorbar', aes(ymax = ..y..,ymin=..y..),
+                   width = 0.75, linetype = 'dashed')
   }
   
   #if channel is not ROX (i.e. ROX), then you don't need the face_wrap because there is only 1 sample
@@ -284,7 +288,9 @@ newfunction <- function(xval,channel,grouper){
                 #vjust = 0,
                 #nudge_y = -0.01,
                 aes(colour = .data[[grouper]]) #changes the colour to match the Operator colour
-      )
+      )+
+      stat_summary(fun = mean, geom = 'errorbar', aes(ymax = ..y..,ymin=..y..),
+                   width = 0.75, linetype = 'dashed')
     
   }
     
@@ -298,6 +304,84 @@ newfunction("Operator","FAM","Day") #arguments are as follows (xval, channel, gr
 # the xval should be the operator, so you will see 1 box plot for operator 1 and another boxplot for operator 2 the factor you are comparing between (e.g. day to day or operator to operator)
 # channel is the channel that you are interested in (e.g. ROX or FAM)
 # grouper is what you want to compare. e.g. day to day or operator to operator. if you put day, then you should see that you the points in your box plot is colour cooded according to the day of operation
+
+
+
+
+
+
+
+z<-ggplot(data=a, aes(x=Day, y=ROX, label = ROX))
+z+
+  facet_wrap(.~Sample,nrow = 1, scales = "free_y", labeller = label_both)+
+  scale_y_continuous(n.breaks = 10)+
+  geom_boxplot(outlier.alpha = 0,
+               alpha = 0.5)+
+  geom_jitter(size = 5,
+              aes(colour = Operator),
+              alpha = 0.3
+  )+
+  ggtitle("Box Plot of Intermediate Precision (Operator to Operator) in the ROX channel")+
+  ylab("Ct value in the ROX channel")+
+  theme(axis.title = 
+          element_text(size = 18),
+        legend.title = 
+          element_text(size = 18),
+        legend.text = 
+          element_text(size = 16),
+        strip.text = 
+          element_text(size = 16),
+        axis.text = 
+          element_text(size = 16),
+        axis.ticks.x.bottom = 
+          element_blank(),
+        axis.title.x = 
+          element_blank(),
+        plot.title =
+          element_text(size = 20,
+                       hjust = 0.5)
+  )+
+  
+  #add in labels to the plot
+  geom_text(check_overlap = T, #avoid overlapping the labels
+            size = 3,
+            show.legend = F, #remove the 'a' in the legend
+            #hjust = 0,
+            #nudge_x = -0.6,
+            #vjust = 0,
+            #nudge_y = -0.01,
+            aes(colour = Operator) #changes the colour to match the Operator colour
+  )+
+  stat_summary(fun = mean, geom = 'errorbar', aes(ymax = ..y..,ymin=..y..),
+               width = 0.75, linetype = 'dashed')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
