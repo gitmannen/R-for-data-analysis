@@ -45,7 +45,9 @@ z+
             vjust = 1.5,
             #nudge_y = -0.01,
             aes(colour = Group) #changes the colour to match the Operator colour
-            )
+            )+
+  stat_summary(fun = mean, geom = 'errorbar', aes(ymax = ..y..,ymin=..y..),
+               width = 0.75, linetype = 'dashed')
 
 #Ref, 300k, 500k, and 800k only
 b<-a[a$Group!="PC10" & a$Group!="PC8" & a$Group!="PC5" & a$Group!="NTC",]
