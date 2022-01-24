@@ -16,7 +16,7 @@ z+
               aes(colour = Group),
               alpha = 0.3
               )+
-  ggtitle("Box Plot of Ct values for samples with different cell number \n and different volumes of PC in the ROX channel")+
+  ggtitle("Box Plot of Ct values for samples with different cell concentrations \n and different volumes of PC in the ROX channel")+
   xlab("Samples")+
   ylab("Ct value in the ROX channel")+
   theme(axis.title = 
